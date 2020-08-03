@@ -587,8 +587,7 @@ $(document).ready(function () {
   			 "responsive": true,
   			 "order": [[0, 'desc']], //Initial no order.
   			 "columns": [
-  						{
-  								 "data": "PK_segment_id", "render": function (data, type, row, meta) {
+  						{"data": "PK_segment_id", "render": function (data, type, row, meta) {
   											var str = 'SG-' + row.PK_segment_id;
   											return str;
   								 }
@@ -637,7 +636,7 @@ $(document).ready(function () {
   	$(document).on('click', '#view_Segment_Details', function () {
   			 var id = $(this).data('id');
   			 $('.view_segment_details_modal').modal('show');
-  			 $('.view_segment_details_modal input').prop('disabled', true);
+  			 $('.view_segment_details_modal input, .view_segment_details_modal select').prop('disabled', true);
 
   			 $.ajax({
   						url: base_url + 'stockout/view_segment_details',
@@ -646,6 +645,7 @@ $(document).ready(function () {
   						dataType: 'json',
   						success: function (data) {
   								 $('.view_segment_details_modal input[name="segment_name"]').val(data.segment_name);
+                   $(".view_segment_details_modal select[name='FK_branch_id']").val(data.FK_branch_id).change();
   						}
   			 });
   	});
@@ -661,7 +661,9 @@ $(document).ready(function () {
   						data: { "id": id },
   						dataType: 'json',
   						success: function (data) {
+                console.log(data);
   								 $('.edit_segment_details_modal input[name="segment_name"]').val(data.segment_name);
+                   $(".edit_segment_details_modal select[name='FK_branch_id']").val(data.FK_branch_id).change();
   								 $('.edit_segment_details_modal .edit_Button').attr('data-id', data.PK_segment_id);
   						}
   			 });

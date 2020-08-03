@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2020 at 10:00 AM
+-- Generation Time: Aug 03, 2020 at 02:46 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -3527,7 +3527,9 @@ CREATE TABLE `eb_segment` (
 INSERT INTO `eb_segment` (`PK_segment_id`, `FK_branch_id`, `segment_name`, `status`, `date_added`) VALUES
 (1, 1, 'Kitchen', 1, '2020-04-03 00:19:00'),
 (2, 1, 'Hospital', 1, '2020-04-03 00:00:00'),
-(3, 0, 'Test1', 0, '0000-00-00 00:00:00');
+(3, 4, 'Test11111', 0, '0000-00-00 00:00:00'),
+(4, 2, 'Teste', 0, '2020-08-03 16:02:04'),
+(5, 1, 'Test 2', 0, '2020-08-03 20:31:13');
 
 -- --------------------------------------------------------
 
@@ -4368,7 +4370,7 @@ ALTER TABLE `eb_raw_materials_units`
 -- AUTO_INCREMENT for table `eb_segment`
 --
 ALTER TABLE `eb_segment`
-  MODIFY `PK_segment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `PK_segment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `eb_so_discrepancy_items`

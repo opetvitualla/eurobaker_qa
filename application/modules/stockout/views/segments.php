@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="modal fade add_segment_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
+                  <div class="modal-dialog  ">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title">Add Segment</h5>
@@ -67,7 +67,20 @@
                                             <div class="col-md-12 ">
                                                 <div class="form-group">
                                                     <label>Segment Name</label>
-                                                    <input type="text" class="form-control" name="segment_name">
+                                                    <input type="text" class="form-control" name="segment_name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <div class="form-group">
+                                                    <label>Outlet Name</label>
+                                                    <select class="form-control" name="FK_branch_id" required>
+                                                      <option value="" selected>Select an outlet</option>
+                                                      <?php foreach (_get_all_outlets() as $outlet): ?>
+                                                        <option value="<?= $outlet['PK_branch_id'] ?>"><?= $outlet['outlet_name'] ?></option>
+                                                      <?php endforeach; ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +99,7 @@
                 </div>
 
                 <div class="modal fade view_segment_details_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
+                  <div class="modal-dialog  ">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title">Segment Information</h5>
@@ -106,6 +119,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <div class="form-group">
+                                                    <label>Outlet Name</label>
+                                                    <select class="form-control" name="FK_branch_id" required>
+                                                      <option value="" selected>Select an outlet</option>
+                                                      <?php foreach (_get_all_outlets() as $outlet): ?>
+                                                        <option value="<?= $outlet['PK_branch_id'] ?>"><?= $outlet['outlet_name'] ?></option>
+                                                      <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -115,7 +141,7 @@
                 </div>
 
                 <div class="modal fade edit_segment_details_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
+                  <div class="modal-dialog  ">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title">Edit Segment Information</h5>
@@ -132,6 +158,19 @@
                                                 <div class="form-group">
                                                     <label>Segment Name</label>
                                                     <input type="text" class="form-control" name="segment_name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <div class="form-group">
+                                                    <label>Outlet Name</label>
+                                                    <select class="form-control" name="FK_branch_id" required>
+                                                      <option value="" selected>Select an outlet</option>
+                                                      <?php foreach (_get_all_outlets() as $outlet): ?>
+                                                        <option value="<?= $outlet['PK_branch_id'] ?>"><?= $outlet['outlet_name'] ?></option>
+                                                      <?php endforeach; ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

@@ -416,6 +416,7 @@ class Stockout extends MY_Controller {
 		$data         = $this->input->post();
 		$set          = array(
 											'segment_name' => $data['segment_name'],
+											'FK_branch_id' => $data['FK_branch_id'],
 										);
 		$where        = array(
 											'PK_segment_id' => $data['id']

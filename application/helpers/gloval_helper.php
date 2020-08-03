@@ -61,13 +61,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     }
 
+    function _get_all_outlets(){
+
+        $ci = & get_instance();
+        $par["select"] = "*";
+        $data = getData("eb_outlets", $par);
+        return $data;
+
+    }
+
     function _get_all_units(){
 
         $ci = & get_instance();
         $par["select"] = "*";
         $data = getData("eb_units", $par);
         return $data;
-        
+
     }
 
     function _get_item_units($item_id = 0){
@@ -294,7 +303,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         "FK_outlet_id" => _get_branch_assigned()
                     );
                 }
-                
+
                 $getdata       = getData('eb_item_inventory', $par, 'obj');
                 $qty           = (!empty($getdata) ? $getdata[0]->quantity : 0);
                 $items[$c]->inventory_quantity = $qty;
