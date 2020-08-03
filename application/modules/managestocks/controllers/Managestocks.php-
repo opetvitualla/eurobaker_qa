@@ -64,8 +64,7 @@ class Managestocks extends MY_Controller {
 				"stock_out" 	  			=> $transfer['total_items'],
 				'str_no'		  			=>  $transfer['str_no'],
 				"status"		  			=> 0,
-				"total_amount"	  	=> $transfer["over_total"],
-				"counterchecked_by"	=> $transfer["counterchecked_by"]
+				"total_amount"	  			=> $transfer["over_total"]
 			);
 
 			$transfer_id = insertData("eb_stock_transfer", $data); // insert transfer
@@ -107,8 +106,6 @@ class Managestocks extends MY_Controller {
 						$response = array( "result" => "something went wrong" );
 					}
 				}
-
-				$this->update_inventory_from_outlet($items, $transfer_id); //update inventory from origin
 
 			} else {
 				$response = array( "result" => "error" );
@@ -297,7 +294,7 @@ class Managestocks extends MY_Controller {
 		// update orgin inventory
 		if(!empty($all_items)){
 			$this->check_related_items($all_items, $st_id); // checck if not exist and add
-			// $this->update_inventory_from_outlet($all_items, $st_id); //update inventory from origin
+			$this->update_inventory_from_outlet($all_items, $st_id); //update inventory from origin
 			$this->update_inventory_destination_outlet($all_items, $st_id); //update destination inventory
 		}
 
@@ -351,13 +348,20 @@ class Managestocks extends MY_Controller {
 	}
 
 	private function update_inventory_from_outlet($items = array(), $trans_id= 0){
-			$origin_branch = _get_branch_assigned();
+
+		$par['select'] = 'FK_origin_branch_id';
+		$par['where']  = array('PK_stock_transfer_id' => $trans_id);
+		$getdata       = getData('eb_stock_transfer', $par, 'obj');
+
+		if(!empty($getdata)){
+
+			$origin_branch = $getdata[0]->FK_origin_branch_id;
 
 			if(!empty($items)){
 				foreach ($items as $item) {
 
 					$par['select'] = 'quantity';
-					$par['where']  = array( 'FK_raw_material_id' => $item->item_id, 'FK_outlet_id' => $origin_branch );
+					$par['where']  = array( 'FK_raw_material_id' => $item->rel_id, 'FK_outlet_id' => $origin_branch );
 					$qty_data= getData('eb_item_inventory', $par, 'obj');
 
 					$qty =0;
@@ -366,7 +370,7 @@ class Managestocks extends MY_Controller {
 					}
 
 					$set = array(
-						'quantity' => $qty -  $item->quantity,
+						'quantity' => $qty -  $item->rec_qty,
 						'type' => "transfer",
 						"date_updated" => date("Y-m-d")
 					);
@@ -383,7 +387,7 @@ class Managestocks extends MY_Controller {
 						'type_entry' => "transfer",
 						'trans_id' => $trans_id,
 						'from_value' =>  $qty,
-						'value' =>  $item->quantity,
+						'value' =>  $item->rec_qty,
 						"branch_id" => $origin_branch,
 						"date_added" => date("Y-m-d"),
 						"cal_type"	 => "sub"
@@ -392,6 +396,7 @@ class Managestocks extends MY_Controller {
 					insertData('eb_inventory_movement', $data);
 				}
 			}
+		}
 	}
 
 	private function get_mat_id ($rel_id){

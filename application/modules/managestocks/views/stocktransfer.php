@@ -67,7 +67,7 @@
                                 <div class="form-body">
                                     <div class="card-body">
                                       <div class="row">
-                                          <div class="col-md-8">
+                                          <div class="col-md-4">
                                               <div class="form-group">
                                                   <label>From:</label>
                                                   <p>Bajada</p>
@@ -85,6 +85,12 @@
                                               </div>
                                           </div>
                                           <!--/span-->
+                                          <div class="col-md-4">
+                                              <div class="form-group">
+                                                  <label>Counter checked by:</label>
+                                                  <input type="text" class="form-control count_checked"  name="counterchecked_by" value="">
+                                              </div>
+                                          </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-4">
@@ -242,7 +248,7 @@
                                             <p class="destination">asd</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label class="fbold">Counter Checked:</label>
@@ -339,7 +345,7 @@
                                             <input type="text" class="form-control count_checked"  name="counterchecked_by" value="">
                                         </div>
                                     </div>
-                                    
+
                                     <!--/span-->
                                 </div>
                                 <div class="row">
