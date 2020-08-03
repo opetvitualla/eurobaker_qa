@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2020 at 03:27 AM
+-- Generation Time: Aug 03, 2020 at 10:00 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -3517,7 +3517,7 @@ CREATE TABLE `eb_segment` (
   `FK_branch_id` int(11) NOT NULL,
   `segment_name` varchar(100) NOT NULL,
   `status` int(11) NOT NULL,
-  `date_added` datetime NOT NULL
+  `date_added` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3526,7 +3526,8 @@ CREATE TABLE `eb_segment` (
 
 INSERT INTO `eb_segment` (`PK_segment_id`, `FK_branch_id`, `segment_name`, `status`, `date_added`) VALUES
 (1, 1, 'Kitchen', 1, '2020-04-03 00:19:00'),
-(2, 1, 'Hospital', 1, '2020-04-03 00:00:00');
+(2, 1, 'Hospital', 1, '2020-04-03 00:00:00'),
+(3, 0, 'Test1', 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4367,7 +4368,7 @@ ALTER TABLE `eb_raw_materials_units`
 -- AUTO_INCREMENT for table `eb_segment`
 --
 ALTER TABLE `eb_segment`
-  MODIFY `PK_segment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `PK_segment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `eb_so_discrepancy_items`
