@@ -171,11 +171,11 @@ class Stockout extends MY_Controller {
 				"eb_segment seg" => "so.FK_segment_id = seg.PK_segment_id",
 				"eb_users_meta user_meta" => "user_meta.FK_user_id = so.FK_user_id",
 			);
-			
+
 			$so_data = getData("eb_stock_out so", $par, "obj");
 
 			if(!empty($so_data)){
-			
+
 				$par['select'] = 'firstname, lastname, counter_checked, date_approved';
 				$par['where']  = array('fk_stockout_id' => $so_id);
 				$par["join"] 	= array(
@@ -205,7 +205,7 @@ class Stockout extends MY_Controller {
 	}
 
 	private function get_request_user ($so_id){
-		
+
 		$par['select'] = 'firstname, lastname';
 		$par['where']  = array(
 			'so.PK_stock_out_id' => $so_id,
@@ -213,7 +213,7 @@ class Stockout extends MY_Controller {
 			"so.FK_outlet_id" => _get_branch_assigned()
 		);
 		$par['join']   = array('eb_stock_out so' => 'so.fk_requested_id = meta.FK_user_id');
-		
+
 		$getdata       = getData('eb_users_meta meta', $par, 'obj');
 
 		return $getdata;
@@ -283,7 +283,7 @@ class Stockout extends MY_Controller {
 
 		echo json_encode($response);
 	}
-	
+
 	// update inventory
 
 	private function update_inventory($items = array(), $trans_id= 0){
@@ -296,9 +296,9 @@ class Stockout extends MY_Controller {
 				$par['where']  = array( 'FK_raw_material_id' => $item->item_id, 'FK_outlet_id' => _get_branch_assigned() );
 				$qty_data= getData('eb_item_inventory', $par, 'obj');
 
-				$qty =0;       
+				$qty =0;
 				if(!empty($qty_data)){
-					$qty = $qty_data[0]->quantity;   
+					$qty = $qty_data[0]->quantity;
 				}
 
 				$set = array(
@@ -311,7 +311,7 @@ class Stockout extends MY_Controller {
 					'FK_raw_material_id' => $item->item_id,
 					'FK_outlet_id' => _get_branch_assigned(),
 				);
-				
+
 				updateData('eb_item_inventory', $set, $where);
 
 				$data = array(
@@ -329,10 +329,10 @@ class Stockout extends MY_Controller {
 			}
 		}
 
-	} 
+	}
 
 	private function get_branch_supervisors (){
-		
+
 		$res = [];
 
 		$par['select'] = '*';
@@ -342,11 +342,96 @@ class Stockout extends MY_Controller {
 			'branch_assigned' => _get_outlet_assigned(),
 		);
 		$par['join']   = array('eb_users_meta meta' => 'meta.FK_user_id  = user.PK_user_id');
-		
+
 		$getdata       = getData('eb_users user', $par, 'obj');
 
 		return $getdata;
 
+	}
+
+	public function segments(){
+		$data["title"] 		  = "Segments";
+		$data["page_name"]  = "Manage Stocks > Segments";
+		$data['has_header'] = "includes/admin/header";
+		$data['has_footer']	= "includes/index_footer";
+
+		$this->load_page('segments',$data);
+	}
+
+	public function get_segments() {
+		$limit        = $this->input->post('length');
+		$offset       = $this->input->post('start');
+		$search       = $this->input->post('search');
+		$order        = $this->input->post('order');
+		$draw         = $this->input->post('draw');
+		$column_order = array(
+											'PK_segment_id',
+											'segment_name',
+											'date_added',
+										);
+		$join         = array();
+		$select       = "*";
+		$where        = array();
+		$group        = array();
+		$list         = $this->MY_Model->get_datatables('eb_segment',$column_order, $select, $where, $join, $limit, $offset ,$search, $order, $group);
+
+		$list_of_categories = array(
+			"draw" => $draw,
+			"recordsTotal" => $list['count_all'],
+			"recordsFiltered" => $list['count'],
+			"data" => $list['data']
+		);
+
+		echo json_encode($list_of_categories);
+	}
+
+	public function addSegment() {
+		$segment         = $this->input->post();
+
+		$insert_data  = $this->MY_Model->insert('eb_segment',$segment);
+
+		if ($insert_data) {
+			$response = array(
+										'result' => 'success',
+									);
+		} else {
+			$response = array(
+										'result' => 'error',
+									);
+		}
+		echo json_encode($response);
+	}
+
+	public function view_segment_details() {
+		$data_id          = $this->input->post('id');
+		$options['where'] = array(
+													'PK_segment_id' => $data_id
+												);
+		$data             = $this->MY_Model->getRows('eb_segment', $options, 'row');
+
+		echo json_encode($data);
+	}
+
+	public function update_segment_details() {
+		$data         = $this->input->post();
+		$set          = array(
+											'segment_name' => $data['segment_name'],
+										);
+		$where        = array(
+											'PK_segment_id' => $data['id']
+										);
+		$update_data  = $this->MY_Model->update('eb_segment',$set,$where);
+
+		if ($update_data) {
+			$response = array(
+										'result' => 'success',
+									);
+		} else {
+			$response = array(
+										'result' => 'error',
+									);
+		}
+		echo json_encode($response);
 	}
 
 }

@@ -132,7 +132,7 @@ $(document).ready(function () {
                 <td>
                     <a style="font-size:16px;" href="javascript:;" class="mx-auto fa fa-trash text-danger remove-po-item"></a>
                 </td>
-				
+
 			</tr>
 		`
         if (is_add_item) {
@@ -296,7 +296,7 @@ $(document).ready(function () {
                             <td>
                                 <input type="number" min="0" max="${so_item.quantity}" value="${so_item.quantity}" class="form-control received-qty">
                             </td>
-                        
+
                         </tr>
                     `
 
@@ -358,7 +358,7 @@ $(document).ready(function () {
                             </optgroup>
                         </select>
                     </td>
-                
+
                 <td>
                         <input type="number" value="${so_item.quantity}"  class="form-control item-qty" name="" min="1">
                 </td>
@@ -376,7 +376,7 @@ $(document).ready(function () {
                 <td>
                     <a style="font-size:16px;" href="javascript:;" class="mx-auto fa fa-trash text-danger remove-po-item"></a>
                 </td>
-                    
+
                 </tr>
             `
 
@@ -425,7 +425,7 @@ $(document).ready(function () {
                             <td>
                                 <span> ${options.material_name}</span>
                             </td>
-                        
+
                         <td>
                              ${so_item.quantity}
                         </td>
@@ -438,7 +438,7 @@ $(document).ready(function () {
                         <td>
                             <span class="stotal">${Number(so_item.quantity) * Number(so_item.sales_price)}</span>
                         </td>
-                            
+
                         </tr>
                     `
 
@@ -579,6 +579,114 @@ $(document).ready(function () {
         })
 
     })
+
+    var table_stock_out_segments = $('#stock_out_segments').DataTable({
+  			 "language": { "infoFiltered": "" },
+  			 "processing": true, //Feature control the processing indicator.
+  			 "serverSide": true, //Feature control DataTables' server-side processing mode.
+  			 "responsive": true,
+  			 "order": [[0, 'desc']], //Initial no order.
+  			 "columns": [
+  						{
+  								 "data": "PK_segment_id", "render": function (data, type, row, meta) {
+  											var str = 'SG-' + row.PK_segment_id;
+  											return str;
+  								 }
+  						},
+  						{ "data": "segment_name" },
+  						{ "data": "date_added" },
+  						{
+  								 "data": "PK_segment_id", "render": function (data, type, row, meta) {
+  											var str = '<div class="action-btn-div"><a href="javascript:;" id="edit_Segment_Details" data-id="' + row.PK_segment_id + '"><i class="fa fa-edit"></i></a>';
+  											str += '<a href="javascript:;" id="view_Segment_Details" class="text-success"  data-id="' + row.PK_segment_id + '"><i class="fa fa-eye"></i></a></div>';
+  											return str;
+  								 }
+  						},
+  			 ],
+  			 "ajax": {
+  						"url": base_url + "stockout/get_segments",
+  						"type": "POST"
+  			 },
+  			 "columnDefs": [
+  						{
+  								 "targets": [3],
+  								 "orderable": false,
+  						},
+  			 ],
+  	});
+
+  	$(document).on('submit', '#Segment_Add', function (e) {
+  			 e.preventDefault();
+  			 var formData = new FormData($(this)[0]);
+
+  			 $.ajax({
+  						url: base_url + 'stockout/addSegment',
+  						data: formData,
+  						processData: false,
+  						contentType: false,
+  						cache: false,
+  						type: 'POST',
+  						success: function (data) {
+  								 s_alert("Successfully Saved!", "success");
+  								 table_stock_out_segments.ajax.reload();
+  								 $('.add_segment_modal').modal('hide');
+  						}
+  			 });
+  	});
+
+  	$(document).on('click', '#view_Segment_Details', function () {
+  			 var id = $(this).data('id');
+  			 $('.view_segment_details_modal').modal('show');
+  			 $('.view_segment_details_modal input').prop('disabled', true);
+
+  			 $.ajax({
+  						url: base_url + 'stockout/view_segment_details',
+  						type: "post",
+  						data: { "id": id },
+  						dataType: 'json',
+  						success: function (data) {
+  								 $('.view_segment_details_modal input[name="segment_name"]').val(data.segment_name);
+  						}
+  			 });
+  	});
+
+  	$(document).on('click', '#edit_Segment_Details', function () {
+  			 var id = $(this).data('id');
+  			 console.log(id);
+  			 $('.edit_segment_details_modal').modal('show');
+
+  			 $.ajax({
+  						url: base_url + 'stockout/view_segment_details',
+  						type: "post",
+  						data: { "id": id },
+  						dataType: 'json',
+  						success: function (data) {
+  								 $('.edit_segment_details_modal input[name="segment_name"]').val(data.segment_name);
+  								 $('.edit_segment_details_modal .edit_Button').attr('data-id', data.PK_segment_id);
+  						}
+  			 });
+  	});
+
+  	$(document).on('submit', '#Segment_Edit', function (e) {
+  			 e.preventDefault();
+  			 var formData = new FormData($(this)[0]);
+  			 var dataid = $('#Segment_Edit .edit_Button').data('id');
+  			 formData.append('id', dataid)
+
+  			 $.ajax({
+  						url: base_url + 'stockout/update_segment_details',
+  						data: formData,
+  						processData: false,
+  						contentType: false,
+  						cache: false,
+  						type: 'POST',
+  						success: function (data) {
+  								 s_alert("Successfully Saved!", "success");
+  								 table_stock_out_segments.ajax.reload();
+  								 $('.edit_segment_details_modal').modal('hide');
+  						}
+  			 });
+  	});
 
 
     function calculateTotal(price, qty) {
