@@ -1,4 +1,6 @@
-
+<style type="text/css" media="print">
+   .no-print { display: none; }
+</style>
     <div id="main-wrapper">
         <div class="page-wrapper">
             <!-- ============================================================== -->
@@ -99,25 +101,36 @@
                                                   <input type="number" class="form-control" name="str_no" value="">
                                               </div>
                                           </div>
+                                          <div class="col-md-4 received_by">
+                                              <div class="form-group">
+                                                  <label> </label>
+                                              </div>
+                                          </div>
+                                          <div class="col-md-4 received_by">
+                                              <div class="form-group">
+                                                  <label>Received by:</label>
+                                                  <input type="text" class="form-control" name="received_by" value="">
+                                              </div>
+                                          </div>
                                       </div>
                                       <div class="row">
                                         <table class="table table-bordered po-table transfer">
                                             <thead>
                                                 <tr>
-                                                    <td>Item Name</td>
+                                                    <td class="item-name">Item Name</td>
                                                     <td>Quantity</td>
                                                     <td style="width: 122px;">Item Unit</td>
                                                     <td style="width: 122px;">Price</td>
                                                     <td style="width: 122px;">Total</td>
-                                                    <td>Action</td>
+                                                    <td class="no-print">Action</td>
                                                 </tr>
                                             </thead>
                                             <tbody class="table-po-body"> </tbody>
                                         </table>
                                       </div>
-                                      <div class="row">
+                                      <div class="row no-print">
                                               <div class="col-md-12 text-center">
-                                                  <button type="button" class="btn btn-default btn-add-item transfer"><i class="fa fa-plus"></i> Add More Item</button>
+                                                  <button type="button" class="btn btn-default btn-add-item transfer no-print"><i class="fa fa-plus"></i> Add More Item</button>
 
                                               </div>
                                       </div>
@@ -130,7 +143,7 @@
                                             <!-- <h3 class="fbold o-total">Overall Total: <span>&#8369;</span><span class="over-total">0</span></h3> -->
                                             <hr>
                                             <div class="card-body text-right">
-                                                <button type="submit" class="btn btn-success"> Submit </button>
+                                                <button type="submit" class="btn btn-success no-print"> Submit </button>
                                             </div>
                                         </div>
                                       </div>

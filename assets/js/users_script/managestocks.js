@@ -137,7 +137,7 @@ $(document).ready(function () {
 					let html = `
               <tr>
                 <td>
-                  <select required class="itemselect form-control" style="width: 100%;">
+                  <select required class="itemselect form-control no-print" style="width: 100%;">
                     <optgroup label="Select an item">
                       ${options}
                     </optgroup>
@@ -151,7 +151,7 @@ $(document).ready(function () {
                 <input type="text" value="${po_item.unit}"  class="form-control" name="" readonly>
               </td>
               <td>
-                <a style="font-size:16px;" href="javascript:;" class="mx-auto fa fa-trash text-danger remove-po-item"></a>
+                <a style="font-size:16px;" href="javascript:;" class="mx-auto fa fa-trash text-danger remove-po-item no-print"></a>
               </td>
 
               </tr>
@@ -256,7 +256,7 @@ $(document).ready(function () {
 		let html = `
 			<tr>
 				<td>
-					<select required class="itemselect form-control" style="width: 100%;">
+					<select required class="itemselect form-control no-print" style="width: 100%;">
 						<optgroup label="Select an item">
 							${options}
 						</optgroup>
@@ -268,7 +268,7 @@ $(document).ready(function () {
 			<td> <input type="text" value=""  class="form-control item-unit" name="" readonly> </td>
       		<td> <input required  type="text" class="form-control item-price"> </td>
       		<td> <input required readonly type="text" class="form-control item-total"> </td>
-			<td> <a style="font-size:16px;" href="javascript:;" class="mx-auto fa fa-trash text-danger remove-po-item"></a> </td>
+			<td> <a style="font-size:16px;" href="javascript:;" class="mx-auto fa fa-trash text-danger remove-po-item no-print"></a> </td>
 
 			</tr>
 		`
@@ -373,6 +373,13 @@ $(document).ready(function () {
 			frmdata.append("over_total", over_total);
 			frmdata.append("total_items", total_items);
 			frmdata.append("po_items", JSON.stringify(po_items));
+
+			printJS({
+				printable: 'Stock_Transfer_Add',
+				type: 'html',
+				header: '<div class="header"> <img src="'+base_url+'/assets/img/logo-text.png"><h3>Euro Baker - Inventory</h3><h5>Stock Transfer</h5><p>Gaisano Mall J P Laurel Avenue, Davao City, Davao del Sur</p></div>',
+				style: ".no-print {display: none;} .header {text-align: center; margin-bottom: 2em;} .header img {width: 100px; heigh: 100px} h3, h5, p {margin: 5px} .received_by {display: block;} .form-group .form-control {border: none; border-bottom: 1px solid; border-radius: 0;} .po-table thead td { font-weight: bold; } .row {display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -5px; margin-left: -5px; margin-top: 10px} .col-md-4 {-ms-flex: 0 0 30%; flex: 0 0 30%; max-width: 30%;} .form-group label {font-weight: bold;} .form-group .form-control {display: block!important; margin-top: 1em} .table { border: 1px solid; margin: 1em 0 1em 0; } .table .form-control {border: none;} .table .item-name {width: 125px}"
+			 })
 
 			axios.post(`${base_url}managestocks/save_stock_transfer`, frmdata).then(res => {
 				console.log('res', res);

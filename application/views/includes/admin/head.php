@@ -26,7 +26,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link href="<?= base_url("assets/css/color.css")?>" rel="stylesheet">
-    <link href="<?= base_url("assets/css/print.css")?>" rel="stylesheet">
+    <link href="<?= base_url("assets/css/print.css")?>" rel="stylesheet" type="text/css" media="print">
 
     <link href="<?= base_url("assets/css/my_style.css")?>" rel="stylesheet">
        <link href="<?= base_url("assets/css/select2.css")?>" rel="stylesheet">

@@ -54,6 +54,7 @@ class Managestocks extends MY_Controller {
 
 	public function save_stock_transfer() {
 		$transfer = $this->input->post();
+		echo "<pre>"; print_r($transfer); exit;
 
 		if(!empty($transfer)){
 
