@@ -13,7 +13,9 @@ class Manageiteminventory extends MY_Controller {
 		$data['has_header'] = "includes/admin/header";
 		$data['has_footer']	= "includes/index_footer";
 
-		if (get_user_type() == 1) {
+		if (get_user_type() == 0) {
+			$this->load_management_page('index',$data);
+		} elseif (get_user_type() == 1) {
 			$this->load_page('index',$data);
 		} else {
 			$this->load_purchaser_page('purchaserView',$data);
@@ -92,7 +94,7 @@ class Manageiteminventory extends MY_Controller {
 
 
 	private function get_beg_inventory ($item_id){
-		
+
 		$cur_date = date("m");
 
 		$res = 0;
@@ -105,7 +107,7 @@ class Manageiteminventory extends MY_Controller {
 		);
 		$par['order'] = 'pk_inv_move_id ASC, date_added ASC';
 		$par['limit2'][0] = 1;
-		
+
 		$getdata       = getData('eb_inventory_movement', $par, 'obj');
 
 		if(!empty($getdata)){
@@ -114,5 +116,5 @@ class Manageiteminventory extends MY_Controller {
 
 		}
 		return $res;
-	}	
+	}
 }

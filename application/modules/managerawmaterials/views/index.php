@@ -16,9 +16,11 @@
                             <li class="breadcrumb-item active"><?= $title ?></li>
                         </ol>
                     </div>
-                    <div class="col-md-7 align-self-center text-right d-none d-md-block">
-                        <button type="button" class="btn btn-info theme-bg add_new"><i class="fa fa-plus-circle"></i> Add New</button>
-                    </div>
+                    <?php if (get_user_type() == 0): ?>
+                        <div class="col-md-7 align-self-center text-right d-none d-md-block">
+                            <button type="button" class="btn btn-info theme-bg add_new"><i class="fa fa-plus-circle"></i> Add New</button>
+                        </div>
+                    <?php endif; ?>
                     <div class="">
                         <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
                     </div>
@@ -106,7 +108,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Unit</label>
-                                                    <select name="unit" class="form-control mat_units"></select>  
+                                                    <select name="unit" class="form-control mat_units"></select>
                                                 </div>
                                             </div>
                                             <!--/span-->
@@ -258,7 +260,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Unit</label>
-                                                    <select name="unit" class="form-control mat_units"></select>  
+                                                    <select name="unit" class="form-control mat_units"></select>
                                                 </div>
                                             </div>
                                             <!--/span-->

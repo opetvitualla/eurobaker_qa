@@ -23,10 +23,13 @@ class Managepurchaseorders extends MY_Controller {
 		$data["items"] 		= _get_items();
 		$data["suppliers"]  = _get_suppliers();
 
-		if (get_user_type() == 1) {
+		if (get_user_type() == 0) {
+			$this->load_management_page('index',$data);
+		}
+		elseif (get_user_type() == 1) {
 			$this->load_page('index',$data);
 		}
-		else if (get_user_type() == 2) {
+		elseif (get_user_type() == 2) {
 			$this->load_purchaser_page('purchaserView',$data);
 		}
 		else{
@@ -89,7 +92,7 @@ class Managepurchaseorders extends MY_Controller {
 				"date_added"	  => date("Y-m-d h:i:s")
 			);
 
-			
+
 
 			$po_id = insertData("eb_purchase_order", $data); // insert po
 
@@ -126,7 +129,7 @@ class Managepurchaseorders extends MY_Controller {
 					'current_price' => $item->new_price,
 					'outlet_id' => _get_branch_assigned(),
 				);
-				
+
 				insertData('eb_raw_materials_price_logs', $data);
 			}
 
@@ -147,7 +150,7 @@ class Managepurchaseorders extends MY_Controller {
 
 		$par['select'] = 'sales_price';
 		$par['where']  = array("PK_raw_materials_id" => $item_id, "FK_outlet_id" => _get_branch_assigned());
-		
+
 		$getdata       = getData('eb_raw_materials_list', $par, 'obj');
 
 		if(!empty($getdata)){
@@ -352,7 +355,7 @@ class Managepurchaseorders extends MY_Controller {
 				'FK_purchase_id' => $po_id,
 				'FK_raw_material_id' => $item->item_id,
 			);
-			
+
 			updateData('eb_purchase_order_item', $set, $where);
 		}
 
@@ -368,9 +371,9 @@ class Managepurchaseorders extends MY_Controller {
 				$par['where']  = array( 'FK_raw_material_id' => $item->item_id, 'FK_outlet_id' => _get_branch_assigned(), );
 				$qty_data= getData('eb_item_inventory', $par, 'obj');
 
-				$qty =0;       
+				$qty =0;
 				if(!empty($qty_data)){
-					$qty = $qty_data[0]->quantity;   
+					$qty = $qty_data[0]->quantity;
 				}
 
 				$set = array(
@@ -384,7 +387,7 @@ class Managepurchaseorders extends MY_Controller {
 					'FK_raw_material_id' => $item->item_id,
 					'FK_outlet_id' => _get_branch_assigned(),
 				);
-				
+
 				updateData('eb_item_inventory', $set, $where);
 
 				$data = array(
@@ -402,14 +405,14 @@ class Managepurchaseorders extends MY_Controller {
 			}
 		}
 
-	} 
+	}
 
 	public function check_item_price($item_id = 0){
 
 		$response = array("status" => "error");
 		$par['select'] = 'sales_price';
 		$par['where']  = array('PK_raw_materials_id' => $item_id, "FK_outlet_id" => _get_branch_assigned());
-		
+
 		$getdata       = getData('eb_raw_materials_list', $par, 'obj');
 
 		if(!empty($getdata)){
@@ -451,7 +454,7 @@ class Managepurchaseorders extends MY_Controller {
 
 			$par['select'] = 'PK_unit_id, unit_name';
 			$par['where']  = array('unit_name' => $unit);
-			
+
 			$getdata       = getData('eb_units', $par, 'obj');
 
 			if(!empty($getdata)){

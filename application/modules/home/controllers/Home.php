@@ -4,12 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends MY_Controller {
 
 		public function index(){
-			
 
-			if (get_user_type() == 1) {
+
+			if (get_user_type() == 1 || get_user_type() == 0) {
 				redirect(base_url("managepurchaseorders"));
-			} 
-			else if (get_user_type() == 2) {
+			}
+			elseif (get_user_type() == 2) {
 				redirect(base_url("managepurchaseorders"));
 			}
 			else{

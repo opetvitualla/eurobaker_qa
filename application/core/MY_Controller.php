@@ -35,6 +35,14 @@ class MY_Controller extends MX_Controller {
 		$this->load->view('includes/purchaser/footer',$data);
 	}
 
+	public function load_management_page($page, $data = array()){
+		$this->load->view('includes/management/head',$data);
+		$this->load->view('includes/management/header',$data);
+		$this->load->view('includes/management/sidebar',$data);
+		$this->load->view($page, $data);
+		$this->load->view('includes/management/footer',$data);
+	}
+
 	public function load_super_page($page, $data = array()){
 		$this->load->view('includes/supervisor/head',$data);
 		$this->load->view('includes/supervisor/header',$data);
