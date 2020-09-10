@@ -20,7 +20,7 @@ class Managestocks extends MY_Controller {
 		$this->load_page('stocktransfer',$data);
     }
 
-	public function get_stock_transfer() {
+	public function get_stock_transfer($branch_id) {
 		$limit        = $this->input->post('length');
 		$offset       = $this->input->post('start');
 		$search       = $this->input->post('search');
@@ -38,7 +38,7 @@ class Managestocks extends MY_Controller {
 		);
 		$select       = "PK_stock_transfer_id, FK_destination_branch_id,outlet_name, stock_out, eb_stock_transfer.status, eb_stock_transfer.date_added";
 		$where        = array(
-			'FK_destination_branch_id' => _get_outlet_assigned()// current outlet id
+			'FK_destination_branch_id' => $branch_id// current outlet id
 		);
 		$group        = array();
 		$list         = $this->MY_Model->get_datatables('eb_stock_transfer',$column_order, $select, $where, $join, $limit, $offset ,$search, $order, $group);

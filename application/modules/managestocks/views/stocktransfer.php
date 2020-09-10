@@ -25,6 +25,22 @@
                     <div class="">
                         <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
                     </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-sm-4 align-self-center text-right d-none d-md-block">
+                    <div class="input-group mb-3 pull-md-right">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Select Branch</span>
+                        </div>
+
+                        <select class="form-control" name="stock-transfer-branch">
+                          <?php foreach (_get_all_outlets() as $outlet): ?>
+                               <option value="<?= $outlet['PK_branch_id'] ?>"><?= $outlet['outlet_name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                    </div>
+                  </div>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
@@ -35,6 +51,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+
                                 <div class="table-responsive m-t-40">
                                     <table id="stock_Transfer" class="table table-bordered table-striped text-center">
                                         <thead>

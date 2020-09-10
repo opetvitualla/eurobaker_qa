@@ -32,6 +32,7 @@
     <script src="<?= base_url("assets/module/styleswitcher/jQuery.style.switcher.js")?>"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="<?= base_url("assets/module/daterangepicker/daterangepicker.js")?>"></script>
+    <script src="<?= base_url("assets/module/bootstrap-select/bootstrap-select.min.js")?>"></script>
      <script src="<?= base_url("assets/js/axios.js")?>"></script>
      <script src="<?= base_url("assets/js/print.js")?>"></script>
      <script src="<?= base_url("assets/js/sweetalert.js")?>"></script>
@@ -52,7 +53,8 @@
             $(".btn-print-inv").click(function(){
                 $(".printdiv").printElement()
             })
-            
+
+
 
         })
     </script>
@@ -66,7 +68,7 @@
 
 
 
-     
+
 
 </body>
 

@@ -19,6 +19,7 @@
     <link href="<?= base_url("assets/module/perfect-scrollbar/dist/css/perfect-scrollbar.min.css")?>" rel="stylesheet">
     <link href="<?= base_url("assets/module/c3-master/c3.min.css")?>" rel="stylesheet">
         <link href="<?= base_url("assets/module/daterangepicker/daterangepicker.css")?>" rel="stylesheet">
+        <link href="<?= base_url("assets/module/bootstrap-select/bootstrap-select.min.css")?>" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="<?= base_url("assets/css/style2.css")?>" rel="stylesheet">
     <link href="<?= base_url("assets/css/pages/dashboard2.css")?>" rel="stylesheet">

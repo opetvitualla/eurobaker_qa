@@ -5,6 +5,8 @@ $(document).ready(function () {
 
 	let is_add_item = false;
 
+
+
 	$(".show-add-modal").click(function () {
 		$(".table-po-body").html("");
 		is_add_item = true;
@@ -16,6 +18,8 @@ $(document).ready(function () {
 		//  suppliers = JSON.parse(res.data.data);
 		items = res.data.data;
 	})
+
+
 	var stock_adjustments = $('#stock_Adjustments').DataTable({
 		"language": { "infoFiltered": "" },
 		"processing": true, //Feature control the processing indicator.
@@ -56,62 +60,70 @@ $(document).ready(function () {
 			},
 		],
 	});
-	var stock_transfer = $('#stock_Transfer').DataTable({
-		"language": { "infoFiltered": "" },
-		"processing": true, //Feature control the processing indicator.
-		"serverSide": true, //Feature control DataTables' server-side processing mode.
-		"responsive": true,
-		"order": [[0, 'desc']], //Initial no order.
-		"columns": [
-			{
-				"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
-					var str = 'TR-' + row.PK_stock_transfer_id;
-					return str;
-				}
-			},
-			{ "data": "stock_out" },
-			{ "data": "outlet_name" },
-			{
-				"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
-					var str = '';
-					if (row.status == 0) {
-						str = '<span class="pending"> Pending</span>';
-					} else {
-						str = '<span class="delivered"> Delivered</span>';
+
+	$('select[name="stock-transfer-branch"]').on('change', function() {
+		var stock_transfer = $('#stock_Transfer').DataTable({
+			"language": { "infoFiltered": "" },
+			"processing": true, //Feature control the processing indicator.
+			"serverSide": true, //Feature control DataTables' server-side processing mode.
+			"responsive": true,
+			"destroy": true,
+			"order": [[0, 'desc']], //Initial no order.
+			"columns": [
+				{
+					"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
+						var str = 'TR-' + row.PK_stock_transfer_id;
+						return str;
 					}
-					return str;
-				}
-			},
-			{
-				"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
-					var str = moment(row.date_added, "YYYY-MM-DD HH:mm:ss").format("MM/DD/YYYY");
-					return str;
-				}
-			},
-			{
-				"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
-					var str = '';
-					if (row.status == 0) {
-						// str += '<div class="mx-auto action-btn-div"><a id ="transfer_edit_details" class="fa fa-edit transfer_edit_details text-success" data-id="' + row.PK_stock_transfer_id + '"></a>';
-						str += '<a id ="transfer_view_details" title="Mark as Delivered" class="fa fa-check received_details text-success" data-id="' + row.PK_stock_transfer_id + '"></a></div>';
-					} else {
-						str += '<a id ="transfer_view_details" class="fa fa-eye transfer_view_details text-success" data-id="' + row.PK_stock_transfer_id + '"></a>';
+				},
+				{ "data": "stock_out" },
+				{ "data": "outlet_name" },
+				{
+					"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
+						var str = '';
+						if (row.status == 0) {
+							str = '<span class="pending"> Pending</span>';
+						} else {
+							str = '<span class="delivered"> Delivered</span>';
+						}
+						return str;
 					}
-					return str;
-				}
+				},
+				{
+					"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
+						var str = moment(row.date_added, "YYYY-MM-DD HH:mm:ss").format("MM/DD/YYYY");
+						return str;
+					}
+				},
+				{
+					"data": "PK_stock_transfer_id", "render": function (data, type, row, meta) {
+						var str = '';
+						if (row.status == 0) {
+							// str += '<div class="mx-auto action-btn-div"><a id ="transfer_edit_details" class="fa fa-edit transfer_edit_details text-success" data-id="' + row.PK_stock_transfer_id + '"></a>';
+							str += '<a id ="transfer_view_details" title="Mark as Delivered" class="fa fa-check received_details text-success" data-id="' + row.PK_stock_transfer_id + '"></a></div>';
+						} else {
+							str += '<a id ="transfer_view_details" class="fa fa-eye transfer_view_details text-success" data-id="' + row.PK_stock_transfer_id + '"></a>';
+						}
+						return str;
+					}
+				},
+			],
+			"ajax": {
+				"url": base_url + "managestocks/get_stock_transfer/"+$(this).val(),
+				"type": "POST"
 			},
-		],
-		"ajax": {
-			"url": base_url + "managestocks/get_stock_transfer",
-			"type": "POST"
-		},
-		"columnDefs": [
-			{
-				"targets": [5],
-				"orderable": false,
-			},
-		],
+			"columnDefs": [
+				{
+					"targets": [5],
+					"orderable": false,
+				},
+			],
+		});
 	});
+
+	$('select[name="stock-transfer-branch"]').val(1).trigger('change');
+	
+
 
 	$(document).on("click", ".transfer_edit_details", function () {
 		let transferred_id = $(this).data("id");
