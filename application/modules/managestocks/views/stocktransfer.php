@@ -27,21 +27,24 @@
                     </div>
 
                 </div>
-                <div class="row">
-                  <div class="col-sm-4 align-self-center text-right d-none d-md-block">
-                    <div class="input-group mb-3 pull-md-right">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Select Branch</span>
-                        </div>
+                <?php if ($this->session->userdata('user_type') == 0 || $this->session->userdata('user_type') == 2 ) { ?>
+                  <div class="row">
+                    <div class="col-sm-4 align-self-center text-right d-none d-md-block">
+                      <div class="input-group mb-3 pull-md-right">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">Select Branch</span>
+                          </div>
 
-                        <select class="form-control" name="stock-transfer-branch">
-                          <?php foreach (_get_all_outlets() as $outlet): ?>
-                               <option value="<?= $outlet['PK_branch_id'] ?>"><?= $outlet['outlet_name'] ?></option>
-                          <?php endforeach; ?>
-                        </select>
+                          <select class="form-control" name="stock-transfer-branch">
+                            <?php foreach (_get_all_outlets() as $outlet): ?>
+                                 <option value="<?= $outlet['PK_branch_id'] ?>"><?= $outlet['outlet_name'] ?></option>
+                            <?php endforeach; ?>
+                          </select>
+                      </div>
                     </div>
                   </div>
-                </div>
+              <?php } ?>
+
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
